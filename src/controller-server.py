@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Initialize node
 rospy.init_node('controller-server')
-pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
 rate = rospy.Rate(10)
 
 auth = HTTPBasicAuth()
