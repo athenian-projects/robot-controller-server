@@ -8,8 +8,9 @@ from flask import Response
 from flask import jsonify
 from flask_httpauth import HTTPBasicAuth
 from geometry_msgs.msg import Twist
-from scripts.utils import new_twist
-from scripts.utils import setup_logging
+
+from src.utils import new_twist
+from src.utils import setup_logging
 
 PORT = 'port'
 LOG_LEVEL = 'loglevel'
