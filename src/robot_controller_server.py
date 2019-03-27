@@ -84,6 +84,7 @@ def main():
 
     port = int(os.environ.get('PORT', args[PORT]))
     logger.info("Starting customer server listening on port {}".format(port))
+    print("Starting customer server listening on port {}".format(port))
 
     http.run(debug=False, port=port, host='0.0.0.0')
 
