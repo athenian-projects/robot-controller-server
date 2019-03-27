@@ -3,6 +3,7 @@
 import argparse
 import logging
 import os
+from threading import Thread
 
 import rospy
 from flask import Flask
@@ -27,6 +28,30 @@ auth = HTTPBasicAuth()
 http = Flask(__name__)
 
 
+class CurrentTwist(object):
+    def __init__(self):
+        self.x_linear = 0.0
+        self.z_angular = 0.0
+
+    def forward(self):
+        self.x_linear += .1
+
+    def backward(self):
+        self.x_linear -= .1
+
+    def left(self):
+        self.z_angular += .1
+
+    def right(self):
+        self.z_angular -= .1
+
+    def twist_msg(self):
+        return new_twist(self.x_linear, self.z_angular)
+
+
+current_twist = CurrentTwist()
+
+
 @http.route('/')
 def root():
     return Response('Read the README page', mimetype='text/plain')
@@ -35,32 +60,28 @@ def root():
 @http.route('/forward')
 def forward():
     print("Publishing forward")
-    t = new_twist(0.5, 0.0)
-    pub.publish(t)
+    current_twist.forward()
     return jsonify({'status': 'success'})
 
 
 @http.route('/backward')
 def backward():
     print("Publishing backward")
-    t = new_twist(-0.5, 0.0)
-    pub.publish(t)
+    current_twist.backward()
     return jsonify({'status': 'success'})
 
 
 @http.route('/left')
 def left():
     print("Publishing left")
-    t = new_twist(0.0, 0.5)
-    pub.publish(t)
+    current_twist.left()
     return jsonify({'status': 'success'})
 
 
 @http.route('/right')
 def right():
     print("Publishing right")
-    t = new_twist(0.0, -0.5)
-    pub.publish(t)
+    current_twist.right()
     return jsonify({'status': 'success'})
 
 
@@ -70,6 +91,12 @@ def stop():
     t = new_twist(0.0, 0.0)
     pub.publish(t)
     return jsonify({'status': 'success'})
+
+
+def publish():
+    while not rospy.is_shutdown():
+        pub.publish(current_twist.twist_msg())
+        rate.sleep()
 
 
 def main():
@@ -86,6 +113,9 @@ def main():
     port = int(os.environ.get('PORT', args[PORT]))
     logger.info("Starting customer server listening on port {}".format(port))
     print("Starting customer server listening on port {}".format(port))
+
+    t = Thread(target=publish)
+    t.start()
 
     http.run(debug=False, port=port, host='0.0.0.0')
 
