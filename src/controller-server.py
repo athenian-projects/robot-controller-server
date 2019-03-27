@@ -34,16 +34,16 @@ class CurrentTwist(object):
         self.angular = 0.0
 
     def forward(self):
-        self.linear += .1
+        self.linear = min(self.linear + .1, .5)
 
     def backward(self):
-        self.linear -= .1
+        self.linear = max(self.linear - .1, -.5)
 
     def left(self):
-        self.angular += .1
+        self.angular = min(self.angular + .1, .5)
 
     def right(self):
-        self.angular -= .1
+        self.angular = max(self.angular - .1, -.5)
 
     def stop(self):
         self.linear = 0
