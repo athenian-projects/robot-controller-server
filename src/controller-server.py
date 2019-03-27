@@ -30,23 +30,27 @@ http = Flask(__name__)
 
 class CurrentTwist(object):
     def __init__(self):
-        self.x_linear = 0.0
-        self.z_angular = 0.0
+        self.linear = 0.0
+        self.angular = 0.0
 
     def forward(self):
-        self.x_linear += .1
+        self.linear += .1
 
     def backward(self):
-        self.x_linear -= .1
+        self.linear -= .1
 
     def left(self):
-        self.z_angular += .1
+        self.angular += .1
 
     def right(self):
-        self.z_angular -= .1
+        self.angular -= .1
+
+    def stop(self):
+        self.linear = 0
+        self.angular = 0
 
     def twist_msg(self):
-        return new_twist(self.x_linear, self.z_angular)
+        return new_twist(self.linear, self.angular)
 
 
 current_twist = CurrentTwist()
@@ -88,8 +92,7 @@ def right():
 @http.route('/stop')
 def stop():
     print("Publishing stop")
-    t = new_twist(0.0, 0.0)
-    pub.publish(t)
+    current_twist.stop()
     return jsonify({'status': 'success'})
 
 
