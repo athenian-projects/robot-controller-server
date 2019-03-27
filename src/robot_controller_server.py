@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 # Initialize node
 rospy.init_node('robot_controller_server')
-pub = rospy.Publisher('counter', Twist, queue_size=10)
+pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
 auth = HTTPBasicAuth()
 http = Flask(__name__)
