@@ -33,7 +33,7 @@ def root():
 
 @http.route('/forward')
 def forward():
-    print("Publishing Twist Value")
+    print("Publishing forward")
     t = new_twist(0.5, 0.0)
     pub.publish(t)
     return jsonify({'status': 'success'})
@@ -41,7 +41,7 @@ def forward():
 
 @http.route('/backward')
 def backward():
-    print("Publishing Twist Value")
+    print("Publishing backward")
     t = new_twist(-0.5, 0.0)
     pub.publish(t)
     return jsonify({'status': 'success'})
@@ -49,7 +49,7 @@ def backward():
 
 @http.route('/left')
 def left():
-    print("Publishing Twist Value")
+    print("Publishing left")
     t = new_twist(0.0, 0.5)
     pub.publish(t)
     return jsonify({'status': 'success'})
@@ -57,7 +57,7 @@ def left():
 
 @http.route('/right')
 def right():
-    print("Publishing Twist Value")
+    print("Publishing right")
     t = new_twist(0.0, -0.5)
     pub.publish(t)
     return jsonify({'status': 'success'})
@@ -65,7 +65,7 @@ def right():
 
 @http.route('/stop')
 def stop():
-    print("Publishing Twist Value")
+    print("Publishing stop")
     t = new_twist(0.0, 0.0)
     pub.publish(t)
     return jsonify({'status': 'success'})
