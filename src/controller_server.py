@@ -6,10 +6,7 @@ import os
 from threading import Thread
 
 import rospy
-from current
-
--twist
-import CurrentTwist
+from current_twist import CurrentTwist
 from flask import Flask
 from flask import Response
 from flask_httpauth import HTTPBasicAuth
@@ -29,6 +26,7 @@ current_twist = CurrentTwist()
 auth = HTTPBasicAuth()
 http = Flask(__name__)
 
+
 @http.route('/')
 def root():
     return Response('Read the README page', mimetype='text/plain')
@@ -40,11 +38,13 @@ def linear(val):
     current_twist.setLinear(val)
     return current_twist.json()
 
+
 @http.route('/angular/<float:val>', methods=['GET'])
 def linear(val):
     print("Publishing angular")
     current_twist.setAngular(val)
     return current_twist.json()
+
 
 @http.route('/forward')
 def forward():
@@ -89,6 +89,7 @@ def publish():
     while not rospy.is_shutdown():
         pub.publish(current_twist.twist_msg())
         rate.sleep()
+
 
 def main():
     # Parse CLI args
