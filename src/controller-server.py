@@ -19,7 +19,7 @@ LOG_LEVEL = 'loglevel'
 logger = logging.getLogger(__name__)
 
 # Initialize node in main thread
-rospy.init_node('controller-server')
+rospy.init_node('controller_server')
 
 current_twist = CurrentTwist()
 
