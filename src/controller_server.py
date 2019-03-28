@@ -34,14 +34,14 @@ def root():
 
 @http.route('/linear/<float:val>', methods=['GET'])
 def linear(val):
-    print("Publishing linear")
+    print("Publishing linear: " + val)
     current_twist.setLinear(val)
     return current_twist.json()
 
 
 @http.route('/angular/<float:val>', methods=['GET'])
 def angular(val):
-    print("Publishing angular")
+    print("Publishing angular: " + val)
     current_twist.setAngular(val)
     return current_twist.json()
 
