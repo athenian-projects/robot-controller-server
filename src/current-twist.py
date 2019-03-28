@@ -15,6 +15,22 @@ class CurrentTwist(object):
     def angular(self):
         return self._angular
 
+    def setLinear(self, val):
+        if (val < -0.5):
+            self._linear = -0.5
+        elif (val > 0.5):
+            self._linear = 0.5
+        else:
+            self._linear = val
+
+    def setAngular(self, val):
+        if (val < -0.5):
+            self._angular = -0.5
+        elif (val > 0.5):
+            self._angular = 0.5
+        else:
+            self._angular = val
+
     def forward(self):
         self._linear = min(self._linear + .1, .5)
 
