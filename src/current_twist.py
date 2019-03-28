@@ -1,8 +1,10 @@
 from flask import jsonify
 from utils import new_twist
 
+maxPower = 0.8
 
 class CurrentTwist(object):
+
     def __init__(self):
         self._linear = 0.0
         self._angular = 0.0
@@ -16,16 +18,16 @@ class CurrentTwist(object):
         return self._angular
 
     def forward(self):
-        self._linear = min(self._linear + .1, .5)
+        self._linear = min(self._linear + .1, maxPower)
 
     def backward(self):
-        self._linear = max(self._linear - .1, -.5)
+        self._linear = max(self._linear - .1, -maxPower)
 
     def left(self):
-        self._angular = min(self._angular + .1, .5)
+        self._angular = min(self._angular + .1, maxPower)
 
     def right(self):
-        self._angular = max(self._angular - .1, -.5)
+        self._angular = max(self._angular - .1, -maxPower)
 
     def stop(self):
         self._linear = 0
