@@ -16,6 +16,7 @@ class CurrentTwist(object):
         return self._angular
 
     def setLinear(self, val):
+        print("Linear val = " + str(val))
         if (val < -0.5):
             self._linear = -0.5
         elif (val > 0.5):
@@ -24,6 +25,7 @@ class CurrentTwist(object):
             self._linear = val
 
     def setAngular(self, val):
+        print("Angular val = " + str(val))
         if (val < -0.5):
             self._angular = -0.5
         elif (val > 0.5):
