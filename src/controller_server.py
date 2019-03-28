@@ -18,6 +18,9 @@ LOG_LEVEL = 'loglevel'
 
 logger = logging.getLogger(__name__)
 
+# Initialize node in main thread
+rospy.init_node('controller-server')
+
 current_twist = CurrentTwist()
 
 auth = HTTPBasicAuth()
@@ -64,9 +67,6 @@ def stop():
 
 
 def publish():
-    # Initialize node
-    rospy.init_node('controller-server')
-
     # Setup publisher and rate
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     rate = rospy.Rate(10)
