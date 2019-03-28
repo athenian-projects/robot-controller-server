@@ -40,13 +40,11 @@ def linear(val):
     current_twist.setLinear(val)
     return current_twist.json()
 
-
 @http.route('/angular/<float:val>', methods=['GET'])
 def linear(val):
     print("Publishing angular")
     current_twist.setAngular(val)
     return current_twist.json()
-
 
 @http.route('/forward')
 def forward():
