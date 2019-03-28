@@ -35,4 +35,4 @@ class CurrentTwist(object):
         return new_twist(self.linear, self.angular)
 
     def json(self):
-        return jsonify({'linear': self.linear, 'angular': self.angular})
+        return jsonify({'linear': round(self.linear, 1), 'angular': round(self.angular, 2)})
