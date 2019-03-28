@@ -9,6 +9,7 @@ import rospy
 from current_twist import CurrentTwist
 from flask import Flask
 from flask import Response
+from flask import request
 from flask_httpauth import HTTPBasicAuth
 from geometry_msgs.msg import Twist
 from utils import setup_logging
@@ -26,9 +27,26 @@ current_twist = CurrentTwist()
 auth = HTTPBasicAuth()
 http = Flask(__name__)
 
+
 @http.route('/')
 def root():
     return Response('Read the README page', mimetype='text/plain')
+
+
+@http.route('/linear', methods=['GET'])
+def linear():
+    val = request.args.get('val')
+    print("Publishing linear: " + val)
+    current_twist.setLinear(float(val))
+    return current_twist.json()
+
+
+@http.route('/angular', methods=['GET'])
+def angular():
+    val = request.args.get('val')
+    print("Publishing angular: " + val)
+    current_twist.setAngular(float(val))
+    return current_twist.json()
 
 
 @http.route('/forward')
@@ -74,6 +92,7 @@ def publish():
     while not rospy.is_shutdown():
         pub.publish(current_twist.twist_msg())
         rate.sleep()
+
 
 def main():
     # Parse CLI args
