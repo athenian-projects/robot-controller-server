@@ -34,7 +34,7 @@ def root():
 
 
 @http.route('/dual')
-def linear():
+def dual():
     linear = request.args.get('linear')
     angular = request.args.get('angular')
     print("Publishing dual: " + linear + " " + angular)
