@@ -19,7 +19,7 @@ class CurrentTwist(object):
         return self._angular
 
     def setLinear(self, val):
-        print("Linear val = " + str(val))
+        print("Linear: " + str(val))
         if (val < -MAX_LINEAR):
             self._linear = -MAX_LINEAR
         elif (val > MAX_LINEAR):
@@ -28,7 +28,7 @@ class CurrentTwist(object):
             self._linear = val
 
     def setAngular(self, val):
-        print("Angular val = " + str(val))
+        print("Angular: " + str(val))
         if (val < -MAX_ANGULAR):
             self._angular = -MAX_ANGULAR
         elif (val > MAX_ANGULAR):
