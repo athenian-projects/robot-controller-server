@@ -1,8 +1,8 @@
 from flask import jsonify
 from utils import new_twist
 
-MAX_LINEAR = 0.5
-MAX_ANGULAR = 0.8
+MAX_LINEAR = 1.0
+MAX_ANGULAR = 1.0
 
 
 class CurrentTwist(object):
