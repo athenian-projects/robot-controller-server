@@ -33,7 +33,17 @@ def root():
     return Response('Read the README page', mimetype='text/plain')
 
 
-@http.route('/linear', methods=['GET'])
+@http.route('/dual')
+def linear():
+    linear = request.args.get('linear')
+    angular = request.args.get('angular')
+    print("Publishing dual: " + linear + " " + angular)
+    current_twist.setLinear(float(linear))
+    current_twist.seAngular(float(angular))
+    return current_twist.json()
+
+
+@http.route('/linear')
 def linear():
     val = request.args.get('val')
     print("Publishing linear: " + val)
@@ -41,7 +51,7 @@ def linear():
     return current_twist.json()
 
 
-@http.route('/angular', methods=['GET'])
+@http.route('/angular')
 def angular():
     val = request.args.get('val')
     print("Publishing angular: " + val)
