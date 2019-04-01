@@ -39,7 +39,7 @@ def dual():
     angular = request.args.get('angular')
     print("Publishing dual: " + linear + " " + angular)
     current_twist.setLinear(float(linear))
-    current_twist.seAngular(float(angular))
+    current_twist.setAngular(float(angular))
     return current_twist.json()
 
 
