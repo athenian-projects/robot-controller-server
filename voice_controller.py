@@ -10,7 +10,11 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 
 # Gazebo
-prefix = "http://10.16.103.133:8080/"
+# prefix = "http://10.16.103.133:8080/"
+prefix = "http://10.16.104.100:8080/"
+
+
+# prefix = "http://turtle1.athenian.org:8080/"
 
 
 def move_robot(direction):
