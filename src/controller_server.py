@@ -16,11 +16,13 @@ from utils import setup_logging
 
 PORT = 'port'
 LOG_LEVEL = 'loglevel'
+PULSE = 'pulse'
 
 logger = logging.getLogger(__name__)
 
 # Initialize node in main thread
 rospy.init_node('controller_server')
+pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
 
 current_twist = CurrentTwist()
 
@@ -94,9 +96,19 @@ def dual():
     return current_twist.json()
 
 
+@http.route('/pulse')
+def dual():
+    linear = request.args.get('linear')
+    angular = request.args.get('angular')
+    print("Publishing pulse: " + linear + " " + angular)
+    current_twist.setLinear(float(linear))
+    current_twist.setAngular(float(angular))
+    pub.publish(current_twist.twist_msg())
+    return current_twist.json()
+
+
 def publish():
     # Setup publisher and rate
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     rate = rospy.Rate(10)
 
     while not rospy.is_shutdown():
@@ -110,6 +122,7 @@ def main():
     parser.add_argument('-p', '--port', dest=PORT, default=8080, help='HTTP port [8080]')
     parser.add_argument('-v', '--verbose', dest=LOG_LEVEL, default=logging.INFO, action='store_const',
                         const=logging.DEBUG, help='Enable debugging info')
+    parser.add_argument('--pulse', dest=PULSE, default=False, action="store_true", help='Enable pulse of twist values')
     args = vars(parser.parse_args())
 
     # Setup logging
@@ -119,7 +132,8 @@ def main():
     logger.info("Starting ROS controller server listening on port {}".format(port))
     print("Starting ROS controller server listening on port {}".format(port))
 
-    Thread(target=publish).start()
+    if (not args[PULSE]):
+        Thread(target=publish).start()
 
     http.run(debug=False, port=port, host='0.0.0.0')
 
