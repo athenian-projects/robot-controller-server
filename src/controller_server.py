@@ -33,32 +33,6 @@ def root():
     return Response('Read the README page', mimetype='text/plain')
 
 
-@http.route('/dual')
-def dual():
-    linear = request.args.get('linear')
-    angular = request.args.get('angular')
-    print("Publishing dual: " + linear + " " + angular)
-    current_twist.setLinear(float(linear))
-    current_twist.setAngular(float(angular))
-    return current_twist.json()
-
-
-@http.route('/linear')
-def linear():
-    val = request.args.get('val')
-    print("Publishing linear: " + val)
-    current_twist.setLinear(float(val))
-    return current_twist.json()
-
-
-@http.route('/angular')
-def angular():
-    val = request.args.get('val')
-    print("Publishing angular: " + val)
-    current_twist.setAngular(float(val))
-    return current_twist.json()
-
-
 @http.route('/forward')
 def forward():
     print("Publishing forward")
@@ -94,6 +68,32 @@ def stop():
     return current_twist.json()
 
 
+@http.route('/linear')
+def linear():
+    val = request.args.get('val')
+    print("Publishing linear: " + val)
+    current_twist.setLinear(float(val))
+    return current_twist.json()
+
+
+@http.route('/angular')
+def angular():
+    val = request.args.get('val')
+    print("Publishing angular: " + val)
+    current_twist.setAngular(float(val))
+    return current_twist.json()
+
+
+@http.route('/dual')
+def dual():
+    linear = request.args.get('linear')
+    angular = request.args.get('angular')
+    print("Publishing dual: " + linear + " " + angular)
+    current_twist.setLinear(float(linear))
+    current_twist.setAngular(float(angular))
+    return current_twist.json()
+
+
 def publish():
     # Setup publisher and rate
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
@@ -116,8 +116,8 @@ def main():
     setup_logging(level=args[LOG_LEVEL])
 
     port = int(os.environ.get('PORT', args[PORT]))
-    logger.info("Starting customer server listening on port {}".format(port))
-    print("Starting customer server listening on port {}".format(port))
+    logger.info("Starting ROS controller server listening on port {}".format(port))
+    print("Starting ROS controller server listening on port {}".format(port))
 
     Thread(target=publish).start()
 
