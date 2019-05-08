@@ -3,7 +3,7 @@
 ## Setup
 Install the required python packages with:
 ```bash
-$ pip2 install -r requirements.txt
+pip2 install -r requirements.txt
 ```
 
 ## Magni Robot
