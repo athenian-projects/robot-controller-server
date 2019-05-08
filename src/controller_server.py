@@ -3,7 +3,6 @@
 import argparse
 import logging
 import os
-from threading import Thread
 
 import rospy
 from current_twist import CurrentTwist
@@ -97,7 +96,7 @@ def dual():
 
 
 @http.route('/pulse')
-def dual():
+def pulse():
     linear = request.args.get('linear')
     angular = request.args.get('angular')
     print("Publishing pulse: " + linear + " " + angular)
@@ -132,8 +131,8 @@ def main():
     logger.info("Starting ROS controller server listening on port {}".format(port))
     print("Starting ROS controller server listening on port {}".format(port))
 
-    if (not args[PULSE]):
-        Thread(target=publish).start()
+    # if (not args[PULSE]):
+    #    Thread(target=publish).start()
 
     http.run(debug=False, port=port, host='0.0.0.0')
 
